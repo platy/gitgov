@@ -5,13 +5,29 @@ import { URL } from "url"
 
 
 describe("gov.uk update email parser", () => {
-    describe("when given a vcalid email with a bunch of updates", () => {
+    describe("when given a valid email with a single update", () => {
+        let updateString: Stream
+        beforeAll(() => {
+            updateString = createReadStream("./test/data/GOV.UK update – Living in Hungary.eml", { encoding: "utf-8" })
+        })
+
+        it("Extacts the update", () => {
+            return expect(read(updateString)).resolves.toEqual([
+                {
+                    url: new URL("https://www.gov.uk/guidance/living-in-hungary"),
+                    summary: "1:27pm, 9 April 2019: EU Exit update: updated information on EU Exit added to healthcare, visas and residency, driving and money and taxes section"
+                },
+            ])
+        })
+    })
+
+    describe("when given a valid email with a bunch of updates", () => {
         let updateString: Stream
         beforeAll(() => {
             updateString = createReadStream("./test/data/GOV.UK_ your daily update.eml", { encoding: "utf-8" })
         })
 
-        it("Extacts the first update", () => {
+        it("Extacts the updates", () => {
             return expect(read(updateString)).resolves.toEqual([
                 {
                     url: new URL("https://www.gov.uk/government/publications/international-agreements-if-the-uk-leaves-the-eu-without-a-deal"),

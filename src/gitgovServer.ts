@@ -25,7 +25,10 @@ export function gitgovServer(repoPath: string) {
                     await pusher.push(await update);
                 }
             }
-            promised().then(() => callback(), callback);
+            promised().then(() => callback(), err => {
+                console.error(err)
+                callback()
+            });
         },
         onClose(session: SMTPServerSession) {
             console.log("Closed session", session);

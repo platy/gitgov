@@ -6,8 +6,9 @@ import { default as fetch, Response } from "node-fetch"
 import { setFetch } from "../src/GovUkDocFetcher"
 import { createTransport } from "nodemailer";
 import { Readable } from "stream";
-import { readTree, deleteFolderRecursive } from "./util.test";
+import { deleteFolderRecursive } from "./util.test";
 import { gitgovServer } from "../src/gitgovServer";
+import { readTree } from "../src/util";
 
 describe("integration", () => {
     describe("when receiving a UK Gov update email", () => {

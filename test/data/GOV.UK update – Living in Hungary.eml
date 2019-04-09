@@ -1,0 +1,328 @@
+Delivered-To: mpbush@gmail.com
+Received: by 2002:a02:c8d0:0:0:0:0:0 with SMTP id q16csp4905235jao;
+        Tue, 9 Apr 2019 05:29:27 -0700 (PDT)
+X-Google-Smtp-Source: APXvYqyi//INFwfI7jQnmFgsXBJJmf4ZFTiE3Ud4HR85+wIEoQKf1+hKjWeH8Q9O+Rn3tv05k4qi
+X-Received: by 2002:a17:906:2cd1:: with SMTP id r17mr20312325ejr.101.1554812967061;
+        Tue, 09 Apr 2019 05:29:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1554812967; cv=none;
+        d=google.com; s=arc-20160816;
+        b=pKgxeBpBsUC+CvKee4QLUvg0QIKpf98Tnq6336XI7Xfc5S7/6yMVwKOFwCVdWbpkze
+         8BjnGqLA5+A6vu3yB9SzOTcyM3TdsgGE1K2zIvV16Ly8sR2kVWehSn2s4FAULb6o6+A/
+         aA85ZRQQF7LIwFQgZOYHqeiAnL7J13wCY5TWrcZac3Tw3WrOCuCcRX1gkazEnZ/isIO2
+         m3HdqAj/ncpXzYXTZE56imUwS+zaRc2aS7P6zUgZ63BArljgUm2rOgQvhRc11X9oUACG
+         gI4tM4RggX3EzTlNN8norHRxI1Z8/Gc9m4IKddP4qYIqKGqJgStJjnVz1cuyWXGFzYHA
+         F5Xg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:date:message-id:mime-version:subject:to:reply-to:from
+         :dkim-signature:dkim-signature;
+        bh=76gtW93weZJeOrvYG245KSovXU4yJa5N0fT5tiLNE7E=;
+        b=MmGtz8wBha6kr9pGIt+/gQeuzzUZLQiYpmQx55bQ2J0eKAhk6RZHfvr62oUpYVuimq
+         Xcz28elGwDRhoocSB1ot52J8Wtw9tglvNIAdIz1FoG0qDcgT9ck0mQ+CaAylbl+qUoij
+         LFM64+QIg47MJnJrJE5Cp39p9ngJ6lbm9Zf43o4RRs91MwuK18oLnd6Kg3eW5cu4JDpV
+         Ftj/IFckEzwxuN6i4lfs2Gr7WxPz4i0o4Jf2Mb8oEUXoBGLYedSQ3/GC51605E76812k
+         6+YAXZH6jtfoexN9GDW85C5i4P2ufF7oUYHqMSf1+UjwRYlUn36MwzFfvgBwjfBLwY/P
+         JBIA==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@notifications.service.gov.uk header.s=5libbpvtqotw5ghh6bldqspvzmjani2w header.b=XvqIolOK;
+       dkim=pass header.i=@amazonses.com header.s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn header.b=QijZDi7m;
+       spf=pass (google.com: domain of 0102016a021316f5-98ac0f89-ea62-4cf9-8931-183adf9cab5d-000000@mail.notifications.service.gov.uk designates 54.240.6.111 as permitted sender) smtp.mailfrom=0102016a021316f5-98ac0f89-ea62-4cf9-8931-183adf9cab5d-000000@mail.notifications.service.gov.uk;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=notifications.service.gov.uk
+Return-Path: <0102016a021316f5-98ac0f89-ea62-4cf9-8931-183adf9cab5d-000000@mail.notifications.service.gov.uk>
+Received: from a6-111.smtp-out.eu-west-1.amazonses.com (a6-111.smtp-out.eu-west-1.amazonses.com. [54.240.6.111])
+        by mx.google.com with ESMTPS id x1si208411edh.187.2019.04.09.05.29.26
+        for <mpbush@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 09 Apr 2019 05:29:27 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 0102016a021316f5-98ac0f89-ea62-4cf9-8931-183adf9cab5d-000000@mail.notifications.service.gov.uk designates 54.240.6.111 as permitted sender) client-ip=54.240.6.111;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@notifications.service.gov.uk header.s=5libbpvtqotw5ghh6bldqspvzmjani2w header.b=XvqIolOK;
+       dkim=pass header.i=@amazonses.com header.s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn header.b=QijZDi7m;
+       spf=pass (google.com: domain of 0102016a021316f5-98ac0f89-ea62-4cf9-8931-183adf9cab5d-000000@mail.notifications.service.gov.uk designates 54.240.6.111 as permitted sender) smtp.mailfrom=0102016a021316f5-98ac0f89-ea62-4cf9-8931-183adf9cab5d-000000@mail.notifications.service.gov.uk;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=notifications.service.gov.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=5libbpvtqotw5ghh6bldqspvzmjani2w; d=notifications.service.gov.uk;
+	t=1554812966;
+	h=From:Reply-To:To:Subject:MIME-Version:Content-Type:Message-ID:Date;
+	bh=ZQw75bQ5rPaiAY2q+jCYx3QilOrTHrmh/69VANMTpQk=;
+	b=XvqIolOK5HXomQu/ySIrtx4igQVJC8/U60nyivbJqneGpCd+2Gs8zoJ1HBNG8Kg/
+	d1kcJLvHnM3dHKB29UfcmeyUVCnj/cMWL2yW8Chx2xJQ5X4W12eeLLEGq+tOCORFJlw
+	nGwroHl8I3FKcg+E6BjqiB+I0fL0H3QtATXJtvxU=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1554812966;
+	h=From:Reply-To:To:Subject:MIME-Version:Content-Type:Message-ID:Date:Feedback-ID;
+	bh=ZQw75bQ5rPaiAY2q+jCYx3QilOrTHrmh/69VANMTpQk=;
+	b=QijZDi7mm5hrD4HTKsW59A6Q1oGeo8W+zs5L+7rJe7NVeCWMY9CmJt2Y/b1eQYTT
+	4f5nZgUygR6zrGcKSZPOJXmU6xkeQXlTxcEBFJfSS/7UFi01ZVdLNzPxrYvhWkahuqE
+	Bh5cTcx+1n9IYEYpGawMlYqFKCaTlliy6ut82MeQ=
+From: "GOV.UK Email" <gov.uk.email@notifications.service.gov.uk>
+Reply-To: govuk-email-support@digital.cabinet-office.gov.uk
+To: mpbush@gmail.com
+Subject: =?UTF-8?Q?GOV.UK_update_=E2=80=93_Living_in_Hungary?=
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_304875_2073749527.1554812966647"
+Message-ID: <0102016a021316f5-98ac0f89-ea62-4cf9-8931-183adf9cab5d-000000@eu-west-1.amazonses.com>
+Date: Tue, 9 Apr 2019 12:29:26 +0000
+X-SES-Outgoing: 2019.04.09-54.240.6.111
+Feedback-ID: 1.eu-west-1.M09i2swFYaG/Dh70O3yzfH0X81UVFLYEnO9w5Z7AaS4=:AmazonSES
+
+------=_Part_304875_2073749527.1554812966647
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Living in Hungary: https://www.gov.uk/guidance/living-in-hungary?utm_source=
+=3Da9d05962-854c-46c1-9a1b-916be5c0470a&utm_medium=3Demail&utm_campaign=3Dg=
+ovuk-notifications&utm_content=3Dimmediate
+
+Official information British people moving to and living in Hungary need to=
+ know, including EU Exit guidance, residency, healthcare and driving.
+
+ 1:27pm, 9 April 2019: EU Exit update: updated information on EU Exit added=
+ to healthcare, visas and residency, driving and money and taxes section
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+You=E2=80=99re getting this email because you subscribed to =E2=80=98Brexit=
+=E2=80=99 updates on GOV.=E2=80=8BUK.
+
+Unsubscribe from =E2=80=98Brexit=E2=80=99: https://www.gov.uk/email/unsubsc=
+ribe/93c878bf-e5ef-42b9-8287-a4be47b19baf?title=3DBrexit
+View and manage your subscriptions: https://www.gov.uk/email/authenticate?a=
+ddress=3Dmpbush%40gmail.com
+
+=C2=A0
+
+Is this email useful? Answer some questions to tell us more: https://www.sm=
+artsurvey.co.uk/s/govuk-email/?f=3Dimmediate.
+
+=C2=A0
+
+Do not reply to this email. Feedback? Visit https://www.gov.uk/contact
+
+------=_Part_304875_2073749527.1554812966647
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns=3D"http://www.w3.org/1999/xhtml" xml:lang=3D"en" lang=3D"en">
+
+<head>
+  <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8" =
+/>
+  <meta content=3D"telephone=3Dno" name=3D"format-detection" /> <!-- need t=
+o add formatting for real phone numbers -->
+  <meta name=3D"viewport" content=3D"width=3Ddevice-width" />
+  <title>Page title</title>
+
+  <style type=3D"text/css">
+    @media only screen and (min-device-width: 581px) {
+      .content {
+        width: 580px !important;
+      }
+    }
+    body { margin:0 !important; }
+    div[style*=3D"margin: 16px 0"] { margin:0 !important; }
+  </style>
+
+  <!--[if gte mso 9]>
+    <style type=3D"text/css">
+      li {
+        margin-left: 4px !important;
+      }
+      table {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+      }
+    </style>
+  <![endif]-->
+
+</head>
+
+<body style=3D"font-family: Helvetica, Arial, sans-serif;font-size: 16px;ma=
+rgin: 0;color:#0b0c0c;">
+
+<span style=3D"display: none;font-size: 1px;color: #fff; max-height: 0;">Li=
+ving in Hungary: https://www.gov.uk/guidance/living-in-hungary?utm_source=
+=3Da9d05962-854c-46c1-9a1b-916be5c0470a&amp;utm_medium=3Demail&amp;utm_camp=
+aign=3Dgovuk-notifications&amp;utm_content=3Dimmediate Official information=
+ British people moving to and living in=E2=80=A6</span>
+
+  <table role=3D"presentation" width=3D"100%" style=3D"border-collapse: col=
+lapse;min-width: 100%;width: 100% !important;" cellpadding=3D"0" cellspacin=
+g=3D"0" border=3D"0">
+    <tr>
+      <td width=3D"100%" height=3D"53" bgcolor=3D"#0b0c0c">
+        <!--[if (gte mso 9)|(IE)]>
+          <table role=3D"presentation" width=3D"580" align=3D"center" cellp=
+adding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"border-collapse: colla=
+pse;width: 580px;">
+            <tr>
+              <td>
+        <![endif]-->
+        <table role=3D"presentation" width=3D"100%" style=3D"border-collaps=
+e: collapse;max-width: 580px;" cellpadding=3D"0" cellspacing=3D"0" border=
+=3D"0" align=3D"center">
+          <tr>
+            <td width=3D"70" bgcolor=3D"#0b0c0c" valign=3D"middle">
+              <a href=3D"https://www.gov.uk" title=3D"Go to the GOV.UK home=
+page" style=3D"text-decoration: none;">
+                <table role=3D"presentation" cellpadding=3D"0" cellspacing=
+=3D"0" border=3D"0" style=3D"border-collapse: collapse;">
+                  <tr>
+                    <td style=3D"padding-left: 10px">
+                      <img
+                        src=3D"https://static.notifications.service.gov.uk/=
+images/gov.uk_logotype_crown.png"
+                        alt=3D" "
+                        height=3D"32"
+                        border=3D"0"
+                        style=3D"Margin-top: 4px;"
+                      />
+                    </td>
+                    <td style=3D"font-size: 28px; line-height: 1.315789474;=
+ Margin-top: 4px; padding-left: 10px;">
+                      <span style=3D"
+                        font-family: Helvetica, Arial, sans-serif;
+                        font-weight: 700;
+                        color: #ffffff;
+                        text-decoration: none;
+                        vertical-align:top;
+                        display: inline-block;
+                          ">GOV.UK</span>
+                    </td>
+                  </tr>
+                </table>
+              </a>
+            </td>
+          </tr>
+        </table>
+        <!--[if (gte mso 9)|(IE)]>
+              </td>
+            </tr>
+          </table>
+        <![endif]-->
+      </td>
+    </tr>
+  </table>
+  <table
+      role=3D"presentation"
+      class=3D"content"
+      align=3D"center"
+      cellpadding=3D"0"
+      cellspacing=3D"0"
+      border=3D"0"
+      style=3D"border-collapse: collapse;max-width: 580px; width: 100% !imp=
+ortant;"
+      width=3D"100%"
+  >
+    <tr>
+      <td width=3D"10" height=3D"10" valign=3D"middle"></td>
+      <td>
+        <!--[if (gte mso 9)|(IE)]>
+          <table role=3D"presentation" width=3D"560" align=3D"center" cellp=
+adding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"border-collapse: colla=
+pse;width: 560px;">
+            <tr>
+              <td height=3D"10">
+        <![endif]-->
+                <table role=3D"presentation" width=3D"100%" cellpadding=3D"=
+0" cellspacing=3D"0" border=3D"0" style=3D"border-collapse: collapse;">
+                  <tr>
+                    <td bgcolor=3D"#005EA5" width=3D"100%" height=3D"10"></=
+td>
+                  </tr>
+                </table>
+        <!--[if (gte mso 9)|(IE)]>
+              </td>
+            </tr>
+          </table>
+        <![endif]-->
+      </td>
+      <td width=3D"10" valign=3D"middle" height=3D"10"></td>
+    </tr>
+  </table>
+
+
+
+  <table
+      role=3D"presentation"
+      class=3D"content"
+      align=3D"center"
+      cellpadding=3D"0"
+      cellspacing=3D"0"
+      border=3D"0"
+      style=3D"border-collapse: collapse;max-width: 580px; width: 100% !imp=
+ortant;"
+      width=3D"100%"
+  >
+    <tr>
+      <td height=3D"30"><br /></td>
+    </tr>
+    <tr>
+      <td width=3D"10" valign=3D"middle"><br /></td>
+      <td style=3D"font-family: Helvetica, Arial, sans-serif; font-size: 19=
+px; line-height: 1.315789474; max-width: 560px;">
+        <!--[if (gte mso 9)|(IE)]>
+          <table role=3D"presentation" width=3D"560" align=3D"center" cellp=
+adding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"border-collapse: colla=
+pse;width: 560px;">
+            <tr>
+              <td style=3D"font-family: Helvetica, Arial, sans-serif; font-=
+size: 19px; line-height: 1.315789474;">
+        <![endif]-->
+            <p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 2=
+5px; color: #0B0C0C;"><a style=3D"word-wrap: break-word; color: #005ea5;" h=
+ref=3D"https://www.gov.uk/guidance/living-in-hungary?utm_source=3Da9d05962-=
+854c-46c1-9a1b-916be5c0470a&amp;utm_medium=3Demail&amp;utm_campaign=3Dgovuk=
+-notifications&amp;utm_content=3Dimmediate">Living in Hungary</a></p><p sty=
+le=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C0=
+C;">Official information British people moving to and living in Hungary nee=
+d to know, including EU Exit guidance, residency, healthcare and driving.</=
+p><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color=
+: #0B0C0C;"> 1:27pm, 9 April 2019: EU Exit update: updated information on E=
+U Exit added to healthcare, visas and residency, driving and money and taxe=
+s section</p><hr style=3D"border: 0; height: 1px; background: #BFC1C3; Marg=
+in: 30px 0 30px 0;"><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-h=
+eight: 25px; color: #0B0C0C;">You=E2=80=99re getting this email because you=
+ subscribed to =E2=80=98Brexit=E2=80=99 updates on GOV.=E2=80=8BUK.</p><p s=
+tyle=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0=
+C0C;"><a style=3D"word-wrap: break-word; color: #005ea5;" href=3D"https://w=
+ww.gov.uk/email/unsubscribe/93c878bf-e5ef-42b9-8287-a4be47b19baf?title=3DBr=
+exit">Unsubscribe from =E2=80=98Brexit=E2=80=99</a><br/><a style=3D"word-wr=
+ap: break-word; color: #005ea5;" href=3D"https://www.gov.uk/email/authentic=
+ate?address=3Dmpbush%40gmail.com">View and manage your subscriptions</a></p=
+><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color:=
+ #0B0C0C;">&nbsp;</p><blockquote style=3D"Margin: 0 0 20px 0; border-left: =
+10px solid #BFC1C3;padding: 15px 0 0.1px 15px; font-size: 19px; line-height=
+: 25px;"><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px=
+; color: #0B0C0C;">Is this email useful? <a style=3D"word-wrap: break-word;=
+ color: #005ea5;" href=3D"https://www.smartsurvey.co.uk/s/govuk-email/?f=3D=
+immediate">Answer some questions to tell us more</a>.</p></blockquote><p st=
+yle=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C=
+0C;">&nbsp;</p><blockquote style=3D"Margin: 0 0 20px 0; border-left: 10px s=
+olid #BFC1C3;padding: 15px 0 0.1px 15px; font-size: 19px; line-height: 25px=
+;"><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; colo=
+r: #0B0C0C;">Do not reply to this email. Feedback? Visit <a style=3D"word-w=
+rap: break-word; color: #005ea5;" href=3D"https://www.gov.uk/contact">https=
+://www.gov.uk/contact</a></p></blockquote>
+        <!--[if (gte mso 9)|(IE)]>
+              </td>
+            </tr>
+          </table>
+        <![endif]-->
+      </td>
+      <td width=3D"10" valign=3D"middle"><br /></td>
+    </tr>
+    <tr>
+      <td height=3D"30"><br /></td>
+    </tr>
+  </table>
+
+</body>
+</html>
+
+------=_Part_304875_2073749527.1554812966647--
