@@ -1,0 +1,35 @@
+import { SMTPServer, SMTPServerSession, SMTPServerAddress, SMTPServerDataStream } from "smtp-server";
+import govUkParser from "./GovUkUpdateParser";
+import { default as toDocUpdate } from "./GovUkDocFetcher";
+import DocUpdatePusher from "./DocUpdatePusher";
+
+
+export function gitgovServer(repoPath: string) {
+    const pusher = new DocUpdatePusher(repoPath);
+    const server = new SMTPServer({
+        secure: false,
+        authOptional: true,
+        onMailFrom(_address: SMTPServerAddress, _session: SMTPServerSession, callback: (_err?: Error) => void) {
+            callback();
+        },
+        onRcptTo(_address: SMTPServerAddress, _session: SMTPServerSession, callback: (_err?: Error) => void) {
+            callback();
+        },
+        onData(stream: SMTPServerDataStream, _session: SMTPServerSession, callback: (err?: Error) => void) {
+            console.log("DATA")
+            async function promised() {
+                const changes = await govUkParser(stream);
+                const updates = changes.map(toDocUpdate);
+                // await and push each update sequentially
+                for (const update of updates) {
+                    await pusher.push(await update);
+                }
+            }
+            promised().then(() => callback(), callback);
+        },
+        onClose(session: SMTPServerSession) {
+            console.log("Closed session", session);
+        }
+    });
+    return server;
+}

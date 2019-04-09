@@ -1,0 +1,738 @@
+Delivered-To: mpbush@gmail.com
+Received: by 2002:a02:c8d0:0:0:0:0:0 with SMTP id q16csp131020jao;
+        Fri, 5 Apr 2019 00:39:06 -0700 (PDT)
+X-Google-Smtp-Source: APXvYqyisPlavCevn6IksHh8sdlAcKbwW5HmQfCuDkL7figxPgO1kxyMadtLE+7fbx+ZXGi8sHiM
+X-Received: by 2002:a17:906:3ed1:: with SMTP id d17mr6340655ejj.221.1554449946798;
+        Fri, 05 Apr 2019 00:39:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1554449946; cv=none;
+        d=google.com; s=arc-20160816;
+        b=q8oWxZz2DTWtJVQKBbdMfoyxiN6KB4ggywxcrKdfms4hwbfu336rJdyxkGq3v0nNEW
+         oqAZu+x81gCVwsTJM74VdOF8p5OPyq1w3RBhsuW3m05ZkrFrux8nz+zgvS75H1KixTQG
+         Q8r05bUCF1Da2D83I+N9I4gcpVRGPTzb1D/QJR8J1R1+VNMmZoTsmeElaV5f9R/cNW70
+         MrblCDy1jchF5ZKnlJycHPseKtlg9q2VYBp1TF3bzYNMAMrZh/gRRga/4hL1QJXzYHJt
+         KrAc5jnAlfSBa/jYahlfC/wtPC/3Z9qPaa2n5Fz574dKN573bT0KsPfgZECLatKaukqV
+         ZVNQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:date:message-id:mime-version:subject:to:reply-to:from
+         :dkim-signature:dkim-signature;
+        bh=Eec7RWQQO9kvPxFoiPRVCxy8s/cjsR+PldrnxdLMfyw=;
+        b=lhdcBWCQBxTY/2QZ2wK4xHxP+j7HmlkRXj1/+XXtlW3fGni2w4j2rjlhplAmG1vf/F
+         lCF8ztNGhHlpLlyIBWJ/lIyYvjEUlabHUUHbj9F5elYxTilg2EbwGn6GSpD3Sicbp64O
+         WdLorMv0jHhEZ1ji4Gr4ALqsksJ9tot5OZweH85F3NDHK99Zyj3oMzJ0YR4hrhvvUDFM
+         UFEMRuSc7ZWTQaJ8cY2yH3O4gMirKMTQuMvQ/zZAeYhLrB2cU6kJqKWZYRd7mfbIizL8
+         dCMzG+5OQlVLZPxJzwo8osFRgpThT6Et1nDPvhVmWhhxHNqeIrcj7qrOc6fx/CwHT4Ch
+         cosg==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@notifications.service.gov.uk header.s=5libbpvtqotw5ghh6bldqspvzmjani2w header.b=T1HuqrD9;
+       dkim=pass header.i=@amazonses.com header.s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn header.b=JPppRr1V;
+       spf=pass (google.com: domain of 01020169ec6fd2f7-b9e8bb41-0a9e-4fec-85d4-1a0701672f13-000000@mail.notifications.service.gov.uk designates 54.240.6.111 as permitted sender) smtp.mailfrom=01020169ec6fd2f7-b9e8bb41-0a9e-4fec-85d4-1a0701672f13-000000@mail.notifications.service.gov.uk;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=notifications.service.gov.uk
+Return-Path: <01020169ec6fd2f7-b9e8bb41-0a9e-4fec-85d4-1a0701672f13-000000@mail.notifications.service.gov.uk>
+Received: from a6-111.smtp-out.eu-west-1.amazonses.com (a6-111.smtp-out.eu-west-1.amazonses.com. [54.240.6.111])
+        by mx.google.com with ESMTPS id a20si6491933edj.318.2019.04.05.00.39.06
+        for <mpbush@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 05 Apr 2019 00:39:06 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 01020169ec6fd2f7-b9e8bb41-0a9e-4fec-85d4-1a0701672f13-000000@mail.notifications.service.gov.uk designates 54.240.6.111 as permitted sender) client-ip=54.240.6.111;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@notifications.service.gov.uk header.s=5libbpvtqotw5ghh6bldqspvzmjani2w header.b=T1HuqrD9;
+       dkim=pass header.i=@amazonses.com header.s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn header.b=JPppRr1V;
+       spf=pass (google.com: domain of 01020169ec6fd2f7-b9e8bb41-0a9e-4fec-85d4-1a0701672f13-000000@mail.notifications.service.gov.uk designates 54.240.6.111 as permitted sender) smtp.mailfrom=01020169ec6fd2f7-b9e8bb41-0a9e-4fec-85d4-1a0701672f13-000000@mail.notifications.service.gov.uk;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=notifications.service.gov.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=5libbpvtqotw5ghh6bldqspvzmjani2w; d=notifications.service.gov.uk;
+	t=1554449946;
+	h=From:Reply-To:To:Subject:MIME-Version:Content-Type:Message-ID:Date;
+	bh=a8c6FNM5tKnWvFTHTdi52Z8UoNL8ifzrx7QCo7fNHWg=;
+	b=T1HuqrD9Cuc+ch0DH390Fz1YKJAAdoy4shlYdl+VCD2c1UkASsnBXwlvf8APGcNY
+	Vo4OtqRgsUqYKk0Va0KUIVWudhzsrjpYqvzgX3mlVYaiaw9duZm8zESUpFEeakHn7ey
+	uHmP8tXeExLYcF60/R2Zm7yv3gQImF/2pjy8PPFo=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1554449946;
+	h=From:Reply-To:To:Subject:MIME-Version:Content-Type:Message-ID:Date:Feedback-ID;
+	bh=a8c6FNM5tKnWvFTHTdi52Z8UoNL8ifzrx7QCo7fNHWg=;
+	b=JPppRr1V70M4OZrP87EAmruAs1VHGWVGtxoKD4Na5CtK4MtP3uXa+KYWORNiPNEx
+	FszCcWRwJW2bkhwxe8Q61sDT6Lffy2LlT3xEFWqG3R6ZdnVmXDrSun2DVXo4qiiMVpJ
+	sE6zMQfN6nr5blIhGkN7s0aIdHytueeerOfLXWOg=
+From: "GOV.UK Email" <gov.uk.email@notifications.service.gov.uk>
+Reply-To: govuk-email-support@digital.cabinet-office.gov.uk
+To: mpbush@gmail.com
+Subject: GOV.UK: your daily update
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_4361946_1207885658.1554449945337"
+Message-ID: <01020169ec6fd2f7-b9e8bb41-0a9e-4fec-85d4-1a0701672f13-000000@eu-west-1.amazonses.com>
+Date: Fri, 5 Apr 2019 07:39:05 +0000
+X-SES-Outgoing: 2019.04.05-54.240.6.111
+Feedback-ID: 1.eu-west-1.M09i2swFYaG/Dh70O3yzfH0X81UVFLYEnO9w5Z7AaS4=:AmazonSES
+
+------=_Part_4361946_1207885658.1554449945337
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Brexit=C2=A0
+-----------------------------------------------------------------
+
+International Agreements if the UK leaves the EU without a deal: https://ww=
+w.gov.uk/government/publications/international-agreements-if-the-uk-leaves-=
+the-eu-without-a-deal?utm_source=3Db46e4dd0-3bd1-4469-b207-b00038ea1a82&utm=
+_medium=3Demail&utm_campaign=3Dgovuk-notifications&utm_content=3Ddaily
+
+The UK is taking steps to deliver continuity across a number of internation=
+al agreements that we currently participate in as a member of the EU.
+
+ 5:03pm, 4 April 2019: Updates made to the following agreements:Moldova Air=
+ Services Arrangement, Bosnia and Herzegovina Air Services Arrangement, Ser=
+bia Air Services Arrangement, Republic of North Macedonia Air Services Arra=
+ngement, Hague 2007, Hague 2005, INTERBUS, UK-US Agreement on Mutual Recogn=
+ition, UK =E2=80=93 Switzerland Trade Agreement, Norway and Iceland Trading=
+ Arrangements, UK-US Marine Mutual Recognition Agreement, Vine and Wine, In=
+donesia FLEGT, EU-Armenia Comprehensive and Enhanced Partnership Agreement=
+=E2=80=99, Partnership and Cooperation Agreement between the European Commu=
+nities and the Republic of Azerbaijan, Political Dialogue and Cooperation A=
+greement between the European Union and the Republic of Cuba, Partnership a=
+nd Cooperation Agreement between the European Union and the Republic of Ira=
+q, Strategic Partnership Agreement Between the European Union and Japan, En=
+hanced Partnership and Cooperation Agreement between the European Union and=
+ the Republic of Kazakhstan, EU-Singapore Partnership and Cooperation Agree=
+ment (ESPCA), Partnership and Cooperation Agreement between the EU and Turk=
+menistan (PCA), Parternship and Cooperation Agreement establishing a partne=
+rship between the European Communities and the Republic of Uzbekistan, EU-A=
+rmenia Comprehensive and Enhanced Partnership Agreement=E2=80=99, Partnersh=
+ip and Cooperation Agreement between the European Communities and the Repub=
+lic of Azerbaijan, Political Dialogue and Cooperation Agreement between the=
+ European Union and the Republic of Cuba, Partnership and Cooperation Agree=
+ment between the European Union and the Republic of Iraq, Strategic Partner=
+ship Agreement Between the European Union and Japan, Enhanced Partnership a=
+nd Cooperation Agreement between the European Union and the Republic of Kaz=
+akhstan, EU-Singapore Partnership and Cooperation Agreement (ESPCA), Partne=
+rship and Cooperation Agreement between the EU and Turkmenistan (PCA), Part=
+ernship and Cooperation Agreement establishing a partnership between the Eu=
+ropean Communities and the Republic of Uzbekistan, North Atlantic Ocean
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Important EU Exit information for UK nationals if there=E2=80=99s no deal: =
+https://www.gov.uk/guidance/important-eu-exit-information-for-uk-nationals-=
+if-theres-no-deal?utm_source=3D22fdc3ca-e556-41ed-95b9-aaa0f3984939&utm_med=
+ium=3Demail&utm_campaign=3Dgovuk-notifications&utm_content=3Ddaily
+
+European Union (EU) exit information for UK nationals in the absence of a w=
+ithdrawal agreement.=20
+
+ 4:35pm, 4 April 2019: EU Exit update =E2=80=93 added sections on accessing=
+ benefits in the UK, higher education in the UK and bringing family members=
+ to the UK.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Meeting British citizens across Italy: https://www.gov.uk/government/news/m=
+eeting-british-citizens-across-italy?utm_source=3D808d609e-5860-40db-92ef-c=
+5d7084c7009&utm_medium=3Demail&utm_campaign=3Dgovuk-notifications&utm_conte=
+nt=3Ddaily
+
+The British Embassy in Rome is holding meetings across Italy to update Brit=
+ish citizens working and living in the country.=20
+
+ 3:38pm, 4 April 2019: News citizens=E2=80=99 rights and EU Exit meeting
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Living in Belgium: https://www.gov.uk/guidance/living-in-belgium?utm_source=
+=3D9a553490-939c-4adc-929f-8268f681d06a&utm_medium=3Demail&utm_campaign=3Dg=
+ovuk-notifications&utm_content=3Ddaily
+
+Official information British people moving to and living in Belgium need to=
+ know, including EU Exit guidance, residency, healthcare and driving.
+
+ 2:41pm, 4 April 2019: EU Exit update: added information on the latest no d=
+eal legislation in healthcare, visas and residency, education and driving s=
+ections
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Information and events for UK nationals living in Greece: https://www.gov.u=
+k/government/news/information-and-events-for-uk-nationals-living-in-greece?=
+utm_source=3D9eded449-face-40d8-8f8a-15bfe8431fa3&utm_medium=3Demail&utm_ca=
+mpaign=3Dgovuk-notifications&utm_content=3Ddaily
+
+The British Embassy and Consulate Network are holding a series of meetings =
+with UK nationals across Greece.
+
+ 2:04pm, 4 April 2019: EU Exit update: confirmed time/venue for UK national=
+s outreach event in Kardamili
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Exporting active substance manufactured in the UK if we leave the EU withou=
+t a deal: https://www.gov.uk/government/publications/exporting-active-subst=
+ance-manufacturer-in-the-uk-if-we-leave-the-eu-without-a-deal?utm_source=3D=
+138a431c-cc8e-43ed-9b0a-779bcb8c2f8a&utm_medium=3Demail&utm_campaign=3Dgovu=
+k-notifications&utm_content=3Ddaily
+
+Information on the =E2=80=98Written Confirmation=E2=80=99 process, for acti=
+ve substances manufactured in the United Kingdom (UK), that will be adopted=
+ in a no deal scenario.
+
+ 1:46pm, 4 April 2019: Updated Register of Written Confirmations for UK Act=
+ive Substance Manufacturers added to the page.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+=E2=80=98No deal=E2=80=99 EU exit: Government issues reminder to waste indu=
+stry: https://www.gov.uk/government/news/no-deal-eu-exit-government-issues-=
+reminder-to-waste-industry?utm_source=3De5a138f7-f90c-4870-8874-74b48c15317=
+e&utm_medium=3Demail&utm_campaign=3Dgovuk-notifications&utm_content=3Ddaily
+
+Waste industry should review contingency plans in case of disruption should=
+ the UK leaves the EU without a deal.
+
+ 1:12pm, 4 April 2019: Minor change to wording on potential disruption at p=
+orts
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Frameworks analysis: https://www.gov.uk/government/publications/frameworks-=
+analysis?utm_source=3Dd1dc74fb-10c3-479c-8dc1-a4c581fe4980&utm_medium=3Dema=
+il&utm_campaign=3Dgovuk-notifications&utm_content=3Ddaily
+
+ Breakdown of areas of EU law that intersect with devolved competence in Sc=
+otland, Wales and Northern Ireland.=20
+
+11:10am, 4 April 2019: Added attachment: =E2=80=98Revised Frameworks Analys=
+is: Breakdown of areas of EU law that intersect with devolved competence in=
+ Scotland, Wales and Northern Ireland=E2=80=99.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+EU workers=E2=80=99 qualifications will be recognised after EU Exit: https:=
+//www.gov.uk/government/news/eu-workers-qualifications-will-be-recognised-a=
+fter-eu-exit?utm_source=3D3b2cbbc0-c2b1-4ff8-9aad-603158ae49a3&utm_medium=
+=3Demail&utm_campaign=3Dgovuk-notifications&utm_content=3Ddaily
+
+Health and social care workers from the EU with professional qualifications=
+ can continue to practise in the UK as they do now.
+
+10:54am, 4 April 2019: First published.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Find a professional to certify export health certificates: https://www.gov.=
+uk/government/publications/find-a-professional-to-certify-export-health-cer=
+tificates?utm_source=3De24546ff-ed3f-4805-bc06-abd73f813c26&utm_medium=3Dem=
+ail&utm_campaign=3Dgovuk-notifications&utm_content=3Ddaily
+
+A list of organisations in England, Scotland and Wales that inspect and cer=
+tify animals and animal products for export.
+
+10:54am, 4 April 2019: Added 30 vet and 7 local authority certifiers in Eng=
+land, Scotland and Wales.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Health and social care staff: EU Exit preparations update: https://www.gov.=
+uk/government/publications/health-and-social-care-staff-eu-exit-preparation=
+s-update?utm_source=3Db0761226-cfda-4e2d-a62a-68f863889f6c&utm_medium=3Dema=
+il&utm_campaign=3Dgovuk-notifications&utm_content=3Ddaily
+
+Letter from the Secretary of State for Health and Social Care to health and=
+ social care staff updating them on EU Exit preparations.
+
+10:39am, 4 April 2019: First published.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Living in Germany: https://www.gov.uk/guidance/living-in-germany?utm_source=
+=3D07b9e2ac-92ac-4dcb-a338-6ae2c0d5b64f&utm_medium=3Demail&utm_campaign=3Dg=
+ovuk-notifications&utm_content=3Ddaily
+
+Official information British people moving to and living in Germany need to=
+ know, including EU Exit guidance, residency, healthcare and driving.
+
+10:38am, 4 April 2019: EU Exit update: New information on residency and tra=
+vel after EU Exit
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Social security contributions for UK and EU workers if the UK leaves the EU=
+ with no deal: https://www.gov.uk/guidance/social-security-contributions-fo=
+r-uk-and-eu-workers-if-the-uk-leaves-the-eu-with-no-deal?utm_source=3D3eadb=
+6b2-5320-4e21-a91f-c6fe91b7bf1b&utm_medium=3Demail&utm_campaign=3Dgovuk-not=
+ifications&utm_content=3Ddaily
+
+Find out when you need to pay social security contributions in the UK and o=
+ther EU countries if the UK leaves the EU without a deal.
+
+10:31am, 4 April 2019: First published.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Policy paper on the rights of UK nationals in the EU: https://www.gov.uk/go=
+vernment/publications/policy-paper-on-the-rights-of-uk-nationals-in-the-eu?=
+utm_source=3D7b13bde4-0312-4beb-bca4-309b746741fe&utm_medium=3Demail&utm_ca=
+mpaign=3Dgovuk-notifications&utm_content=3Ddaily
+
+Policy paper outlining the UK Government=E2=80=99s action to protect the ri=
+ghts of UK nationals living in the EU.
+
+ 9:36am, 4 April 2019: First published.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Unsubscribe from =E2=80=98Brexit=E2=80=99: https://www.gov.uk/email/unsubsc=
+ribe/f3f57053-7fc1-4e34-873d-a7a52ddea6ff?title=3DBrexit
+
+You=E2=80=99re getting this email because you subscribed to these topic upd=
+ates on GOV.=E2=80=8BUK.
+View and manage your subscriptions: https://www.gov.uk/email/authenticate?a=
+ddress=3Dmpbush%40gmail.com
+
+=C2=A0
+
+Is this email useful? Answer some questions to tell us more: https://www.sm=
+artsurvey.co.uk/s/govuk-email/?f=3Ddigests.
+
+=C2=A0
+
+Do not reply to this email. Feedback? Visit https://www.gov.uk/contact
+
+------=_Part_4361946_1207885658.1554449945337
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns=3D"http://www.w3.org/1999/xhtml" xml:lang=3D"en" lang=3D"en">
+
+<head>
+  <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8" =
+/>
+  <meta content=3D"telephone=3Dno" name=3D"format-detection" /> <!-- need t=
+o add formatting for real phone numbers -->
+  <meta name=3D"viewport" content=3D"width=3Ddevice-width" />
+  <title>Page title</title>
+
+  <style type=3D"text/css">
+    @media only screen and (min-device-width: 581px) {
+      .content {
+        width: 580px !important;
+      }
+    }
+    body { margin:0 !important; }
+    div[style*=3D"margin: 16px 0"] { margin:0 !important; }
+  </style>
+
+  <!--[if gte mso 9]>
+    <style type=3D"text/css">
+      li {
+        margin-left: 4px !important;
+      }
+      table {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+      }
+    </style>
+  <![endif]-->
+
+</head>
+
+<body style=3D"font-family: Helvetica, Arial, sans-serif;font-size: 16px;ma=
+rgin: 0;color:#0b0c0c;">
+
+<span style=3D"display: none;font-size: 1px;color: #fff; max-height: 0;">Br=
+exit&nbsp; International Agreements if the UK leaves the EU without a deal:=
+ https://www.gov.uk/government/publications/international-agreements-if-the=
+-uk-leaves-the-eu-without-a-deal?utm_source=3Db46e4dd0-3bd1-4469-b207-b0003=
+8ea1a82&amp;utm_medium=3Demail&am=E2=80=A6</span>
+
+  <table role=3D"presentation" width=3D"100%" style=3D"border-collapse: col=
+lapse;min-width: 100%;width: 100% !important;" cellpadding=3D"0" cellspacin=
+g=3D"0" border=3D"0">
+    <tr>
+      <td width=3D"100%" height=3D"53" bgcolor=3D"#0b0c0c">
+        <!--[if (gte mso 9)|(IE)]>
+          <table role=3D"presentation" width=3D"580" align=3D"center" cellp=
+adding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"border-collapse: colla=
+pse;width: 580px;">
+            <tr>
+              <td>
+        <![endif]-->
+        <table role=3D"presentation" width=3D"100%" style=3D"border-collaps=
+e: collapse;max-width: 580px;" cellpadding=3D"0" cellspacing=3D"0" border=
+=3D"0" align=3D"center">
+          <tr>
+            <td width=3D"70" bgcolor=3D"#0b0c0c" valign=3D"middle">
+              <a href=3D"https://www.gov.uk" title=3D"Go to the GOV.UK home=
+page" style=3D"text-decoration: none;">
+                <table role=3D"presentation" cellpadding=3D"0" cellspacing=
+=3D"0" border=3D"0" style=3D"border-collapse: collapse;">
+                  <tr>
+                    <td style=3D"padding-left: 10px">
+                      <img
+                        src=3D"https://static.notifications.service.gov.uk/=
+images/gov.uk_logotype_crown.png"
+                        alt=3D" "
+                        height=3D"32"
+                        border=3D"0"
+                        style=3D"Margin-top: 4px;"
+                      />
+                    </td>
+                    <td style=3D"font-size: 28px; line-height: 1.315789474;=
+ Margin-top: 4px; padding-left: 10px;">
+                      <span style=3D"
+                        font-family: Helvetica, Arial, sans-serif;
+                        font-weight: 700;
+                        color: #ffffff;
+                        text-decoration: none;
+                        vertical-align:top;
+                        display: inline-block;
+                          ">GOV.UK</span>
+                    </td>
+                  </tr>
+                </table>
+              </a>
+            </td>
+          </tr>
+        </table>
+        <!--[if (gte mso 9)|(IE)]>
+              </td>
+            </tr>
+          </table>
+        <![endif]-->
+      </td>
+    </tr>
+  </table>
+  <table
+      role=3D"presentation"
+      class=3D"content"
+      align=3D"center"
+      cellpadding=3D"0"
+      cellspacing=3D"0"
+      border=3D"0"
+      style=3D"border-collapse: collapse;max-width: 580px; width: 100% !imp=
+ortant;"
+      width=3D"100%"
+  >
+    <tr>
+      <td width=3D"10" height=3D"10" valign=3D"middle"></td>
+      <td>
+        <!--[if (gte mso 9)|(IE)]>
+          <table role=3D"presentation" width=3D"560" align=3D"center" cellp=
+adding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"border-collapse: colla=
+pse;width: 560px;">
+            <tr>
+              <td height=3D"10">
+        <![endif]-->
+                <table role=3D"presentation" width=3D"100%" cellpadding=3D"=
+0" cellspacing=3D"0" border=3D"0" style=3D"border-collapse: collapse;">
+                  <tr>
+                    <td bgcolor=3D"#005EA5" width=3D"100%" height=3D"10"></=
+td>
+                  </tr>
+                </table>
+        <!--[if (gte mso 9)|(IE)]>
+              </td>
+            </tr>
+          </table>
+        <![endif]-->
+      </td>
+      <td width=3D"10" valign=3D"middle" height=3D"10"></td>
+    </tr>
+  </table>
+
+
+
+  <table
+      role=3D"presentation"
+      class=3D"content"
+      align=3D"center"
+      cellpadding=3D"0"
+      cellspacing=3D"0"
+      border=3D"0"
+      style=3D"border-collapse: collapse;max-width: 580px; width: 100% !imp=
+ortant;"
+      width=3D"100%"
+  >
+    <tr>
+      <td height=3D"30"><br /></td>
+    </tr>
+    <tr>
+      <td width=3D"10" valign=3D"middle"><br /></td>
+      <td style=3D"font-family: Helvetica, Arial, sans-serif; font-size: 19=
+px; line-height: 1.315789474; max-width: 560px;">
+        <!--[if (gte mso 9)|(IE)]>
+          <table role=3D"presentation" width=3D"560" align=3D"center" cellp=
+adding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"border-collapse: colla=
+pse;width: 560px;">
+            <tr>
+              <td style=3D"font-family: Helvetica, Arial, sans-serif; font-=
+size: 19px; line-height: 1.315789474;">
+        <![endif]-->
+            <h2 style=3D"Margin: 0 0 20px 0; padding: 0; font-size: 27px; l=
+ine-height: 35px; font-weight: bold; color: #0B0C0C;">Brexit&nbsp;</h2><p s=
+tyle=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0=
+C0C;"><a style=3D"word-wrap: break-word; color: #005ea5;" href=3D"https://w=
+ww.gov.uk/government/publications/international-agreements-if-the-uk-leaves=
+-the-eu-without-a-deal?utm_source=3Db46e4dd0-3bd1-4469-b207-b00038ea1a82&am=
+p;utm_medium=3Demail&amp;utm_campaign=3Dgovuk-notifications&amp;utm_content=
+=3Ddaily">International Agreements if the UK leaves the EU without a deal</=
+a></p><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; c=
+olor: #0B0C0C;">The UK is taking steps to deliver continuity across a numbe=
+r of international agreements that we currently participate in as a member =
+of the EU.</p><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height:=
+ 25px; color: #0B0C0C;"> 5:03pm, 4 April 2019: Updates made to the followin=
+g agreements:Moldova Air Services Arrangement, Bosnia and Herzegovina Air S=
+ervices Arrangement, Serbia Air Services Arrangement, Republic of North Mac=
+edonia Air Services Arrangement, Hague 2007, Hague 2005, INTERBUS, UK-US Ag=
+reement on Mutual Recognition, UK =E2=80=93 Switzerland Trade Agreement, No=
+rway and Iceland Trading Arrangements, UK-US Marine Mutual Recognition Agre=
+ement, Vine and Wine, Indonesia FLEGT, EU-Armenia Comprehensive and Enhance=
+d Partnership Agreement=E2=80=99, Partnership and Cooperation Agreement bet=
+ween the European Communities and the Republic of Azerbaijan, Political Dia=
+logue and Cooperation Agreement between the European Union and the Republic=
+ of Cuba, Partnership and Cooperation Agreement between the European Union =
+and the Republic of Iraq, Strategic Partnership Agreement Between the Europ=
+ean Union and Japan, Enhanced Partnership and Cooperation Agreement between=
+ the European Union and the Republic of Kazakhstan, EU-Singapore Partnershi=
+p and Cooperation Agreement (ESPCA), Partnership and Cooperation Agreement =
+between the EU and Turkmenistan (PCA), Parternship and Cooperation Agreemen=
+t establishing a partnership between the European Communities and the Repub=
+lic of Uzbekistan, EU-Armenia Comprehensive and Enhanced Partnership Agreem=
+ent=E2=80=99, Partnership and Cooperation Agreement between the European Co=
+mmunities and the Republic of Azerbaijan, Political Dialogue and Cooperatio=
+n Agreement between the European Union and the Republic of Cuba, Partnershi=
+p and Cooperation Agreement between the European Union and the Republic of =
+Iraq, Strategic Partnership Agreement Between the European Union and Japan,=
+ Enhanced Partnership and Cooperation Agreement between the European Union =
+and the Republic of Kazakhstan, EU-Singapore Partnership and Cooperation Ag=
+reement (ESPCA), Partnership and Cooperation Agreement between the EU and T=
+urkmenistan (PCA), Parternship and Cooperation Agreement establishing a par=
+tnership between the European Communities and the Republic of Uzbekistan, N=
+orth Atlantic Ocean</p><hr style=3D"border: 0; height: 1px; background: #BF=
+C1C3; Margin: 30px 0 30px 0;"><p style=3D"Margin: 0 0 20px 0; font-size: 19=
+px; line-height: 25px; color: #0B0C0C;"><a style=3D"word-wrap: break-word; =
+color: #005ea5;" href=3D"https://www.gov.uk/guidance/important-eu-exit-info=
+rmation-for-uk-nationals-if-theres-no-deal?utm_source=3D22fdc3ca-e556-41ed-=
+95b9-aaa0f3984939&amp;utm_medium=3Demail&amp;utm_campaign=3Dgovuk-notificat=
+ions&amp;utm_content=3Ddaily">Important EU Exit information for UK national=
+s if there=E2=80=99s no deal</a></p><p style=3D"Margin: 0 0 20px 0; font-si=
+ze: 19px; line-height: 25px; color: #0B0C0C;">European Union (EU) exit info=
+rmation for UK nationals in the absence of a withdrawal agreement. </p><p s=
+tyle=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0=
+C0C;"> 4:35pm, 4 April 2019: EU Exit update =E2=80=93 added sections on acc=
+essing benefits in the UK, higher education in the UK and bringing family m=
+embers to the UK.</p><hr style=3D"border: 0; height: 1px; background: #BFC1=
+C3; Margin: 30px 0 30px 0;"><p style=3D"Margin: 0 0 20px 0; font-size: 19px=
+; line-height: 25px; color: #0B0C0C;"><a style=3D"word-wrap: break-word; co=
+lor: #005ea5;" href=3D"https://www.gov.uk/government/news/meeting-british-c=
+itizens-across-italy?utm_source=3D808d609e-5860-40db-92ef-c5d7084c7009&amp;=
+utm_medium=3Demail&amp;utm_campaign=3Dgovuk-notifications&amp;utm_content=
+=3Ddaily">Meeting British citizens across Italy</a></p><p style=3D"Margin: =
+0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C0C;">The Britis=
+h Embassy in Rome is holding meetings across Italy to update British citize=
+ns working and living in the country. </p><p style=3D"Margin: 0 0 20px 0; f=
+ont-size: 19px; line-height: 25px; color: #0B0C0C;"> 3:38pm, 4 April 2019: =
+News citizens=E2=80=99 rights and EU Exit meeting</p><hr style=3D"border: 0=
+; height: 1px; background: #BFC1C3; Margin: 30px 0 30px 0;"><p style=3D"Mar=
+gin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C0C;"><a st=
+yle=3D"word-wrap: break-word; color: #005ea5;" href=3D"https://www.gov.uk/g=
+uidance/living-in-belgium?utm_source=3D9a553490-939c-4adc-929f-8268f681d06a=
+&amp;utm_medium=3Demail&amp;utm_campaign=3Dgovuk-notifications&amp;utm_cont=
+ent=3Ddaily">Living in Belgium</a></p><p style=3D"Margin: 0 0 20px 0; font-=
+size: 19px; line-height: 25px; color: #0B0C0C;">Official information Britis=
+h people moving to and living in Belgium need to know, including EU Exit gu=
+idance, residency, healthcare and driving.</p><p style=3D"Margin: 0 0 20px =
+0; font-size: 19px; line-height: 25px; color: #0B0C0C;"> 2:41pm, 4 April 20=
+19: EU Exit update: added information on the latest no deal legislation in =
+healthcare, visas and residency, education and driving sections</p><hr styl=
+e=3D"border: 0; height: 1px; background: #BFC1C3; Margin: 30px 0 30px 0;"><=
+p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #=
+0B0C0C;"><a style=3D"word-wrap: break-word; color: #005ea5;" href=3D"https:=
+//www.gov.uk/government/news/information-and-events-for-uk-nationals-living=
+-in-greece?utm_source=3D9eded449-face-40d8-8f8a-15bfe8431fa3&amp;utm_medium=
+=3Demail&amp;utm_campaign=3Dgovuk-notifications&amp;utm_content=3Ddaily">In=
+formation and events for UK nationals living in Greece</a></p><p style=3D"M=
+argin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C0C;">The=
+ British Embassy and Consulate Network are holding a series of meetings wit=
+h UK nationals across Greece.</p><p style=3D"Margin: 0 0 20px 0; font-size:=
+ 19px; line-height: 25px; color: #0B0C0C;"> 2:04pm, 4 April 2019: EU Exit u=
+pdate: confirmed time/venue for UK nationals outreach event in Kardamili</p=
+><hr style=3D"border: 0; height: 1px; background: #BFC1C3; Margin: 30px 0 3=
+0px 0;"><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px;=
+ color: #0B0C0C;"><a style=3D"word-wrap: break-word; color: #005ea5;" href=
+=3D"https://www.gov.uk/government/publications/exporting-active-substance-m=
+anufacturer-in-the-uk-if-we-leave-the-eu-without-a-deal?utm_source=3D138a43=
+1c-cc8e-43ed-9b0a-779bcb8c2f8a&amp;utm_medium=3Demail&amp;utm_campaign=3Dgo=
+vuk-notifications&amp;utm_content=3Ddaily">Exporting active substance manuf=
+actured in the UK if we leave the EU without a deal</a></p><p style=3D"Marg=
+in: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C0C;">Inform=
+ation on the =E2=80=98Written Confirmation=E2=80=99 process, for active sub=
+stances manufactured in the United Kingdom (UK), that will be adopted in a =
+no deal scenario.</p><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-=
+height: 25px; color: #0B0C0C;"> 1:46pm, 4 April 2019: Updated Register of W=
+ritten Confirmations for UK Active Substance Manufacturers added to the pag=
+e.</p><hr style=3D"border: 0; height: 1px; background: #BFC1C3; Margin: 30p=
+x 0 30px 0;"><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: =
+25px; color: #0B0C0C;"><a style=3D"word-wrap: break-word; color: #005ea5;" =
+href=3D"https://www.gov.uk/government/news/no-deal-eu-exit-government-issue=
+s-reminder-to-waste-industry?utm_source=3De5a138f7-f90c-4870-8874-74b48c153=
+17e&amp;utm_medium=3Demail&amp;utm_campaign=3Dgovuk-notifications&amp;utm_c=
+ontent=3Ddaily">'No deal' EU exit: Government issues reminder to waste indu=
+stry</a></p><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 2=
+5px; color: #0B0C0C;">Waste industry should review contingency plans in cas=
+e of disruption should the UK leaves the EU without a deal.</p><p style=3D"=
+Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C0C;"> 1=
+:12pm, 4 April 2019: Minor change to wording on potential disruption at por=
+ts</p><hr style=3D"border: 0; height: 1px; background: #BFC1C3; Margin: 30p=
+x 0 30px 0;"><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: =
+25px; color: #0B0C0C;"><a style=3D"word-wrap: break-word; color: #005ea5;" =
+href=3D"https://www.gov.uk/government/publications/frameworks-analysis?utm_=
+source=3Dd1dc74fb-10c3-479c-8dc1-a4c581fe4980&amp;utm_medium=3Demail&amp;ut=
+m_campaign=3Dgovuk-notifications&amp;utm_content=3Ddaily">Frameworks analys=
+is</a></p><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25p=
+x; color: #0B0C0C;"> Breakdown of areas of EU law that intersect with devol=
+ved competence in Scotland, Wales and Northern Ireland. </p><p style=3D"Mar=
+gin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C0C;">11:10=
+am, 4 April 2019: Added attachment: =E2=80=98Revised Frameworks Analysis: B=
+reakdown of areas of EU law that intersect with devolved competence in Scot=
+land, Wales and Northern Ireland=E2=80=99.</p><hr style=3D"border: 0; heigh=
+t: 1px; background: #BFC1C3; Margin: 30px 0 30px 0;"><p style=3D"Margin: 0 =
+0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C0C;"><a style=3D"=
+word-wrap: break-word; color: #005ea5;" href=3D"https://www.gov.uk/governme=
+nt/news/eu-workers-qualifications-will-be-recognised-after-eu-exit?utm_sour=
+ce=3D3b2cbbc0-c2b1-4ff8-9aad-603158ae49a3&amp;utm_medium=3Demail&amp;utm_ca=
+mpaign=3Dgovuk-notifications&amp;utm_content=3Ddaily">EU workers' qualifica=
+tions will be recognised after EU Exit</a></p><p style=3D"Margin: 0 0 20px =
+0; font-size: 19px; line-height: 25px; color: #0B0C0C;">Health and social c=
+are workers from the EU with professional qualifications can continue to pr=
+actise in the UK as they do now.</p><p style=3D"Margin: 0 0 20px 0; font-si=
+ze: 19px; line-height: 25px; color: #0B0C0C;">10:54am, 4 April 2019: First =
+published.</p><hr style=3D"border: 0; height: 1px; background: #BFC1C3; Mar=
+gin: 30px 0 30px 0;"><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-=
+height: 25px; color: #0B0C0C;"><a style=3D"word-wrap: break-word; color: #0=
+05ea5;" href=3D"https://www.gov.uk/government/publications/find-a-professio=
+nal-to-certify-export-health-certificates?utm_source=3De24546ff-ed3f-4805-b=
+c06-abd73f813c26&amp;utm_medium=3Demail&amp;utm_campaign=3Dgovuk-notificati=
+ons&amp;utm_content=3Ddaily">Find a professional to certify export health c=
+ertificates</a></p><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-he=
+ight: 25px; color: #0B0C0C;">A list of organisations in England, Scotland a=
+nd Wales that inspect and certify animals and animal products for export.</=
+p><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color=
+: #0B0C0C;">10:54am, 4 April 2019: Added 30 vet and 7 local authority certi=
+fiers in England, Scotland and Wales.</p><hr style=3D"border: 0; height: 1p=
+x; background: #BFC1C3; Margin: 30px 0 30px 0;"><p style=3D"Margin: 0 0 20p=
+x 0; font-size: 19px; line-height: 25px; color: #0B0C0C;"><a style=3D"word-=
+wrap: break-word; color: #005ea5;" href=3D"https://www.gov.uk/government/pu=
+blications/health-and-social-care-staff-eu-exit-preparations-update?utm_sou=
+rce=3Db0761226-cfda-4e2d-a62a-68f863889f6c&amp;utm_medium=3Demail&amp;utm_c=
+ampaign=3Dgovuk-notifications&amp;utm_content=3Ddaily">Health and social ca=
+re staff: EU Exit preparations update</a></p><p style=3D"Margin: 0 0 20px 0=
+; font-size: 19px; line-height: 25px; color: #0B0C0C;">Letter from the Secr=
+etary of State for Health and Social Care to health and social care staff u=
+pdating them on EU Exit preparations.</p><p style=3D"Margin: 0 0 20px 0; fo=
+nt-size: 19px; line-height: 25px; color: #0B0C0C;">10:39am, 4 April 2019: F=
+irst published.</p><hr style=3D"border: 0; height: 1px; background: #BFC1C3=
+; Margin: 30px 0 30px 0;"><p style=3D"Margin: 0 0 20px 0; font-size: 19px; =
+line-height: 25px; color: #0B0C0C;"><a style=3D"word-wrap: break-word; colo=
+r: #005ea5;" href=3D"https://www.gov.uk/guidance/living-in-germany?utm_sour=
+ce=3D07b9e2ac-92ac-4dcb-a338-6ae2c0d5b64f&amp;utm_medium=3Demail&amp;utm_ca=
+mpaign=3Dgovuk-notifications&amp;utm_content=3Ddaily">Living in Germany</a>=
+</p><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; col=
+or: #0B0C0C;">Official information British people moving to and living in G=
+ermany need to know, including EU Exit guidance, residency, healthcare and =
+driving.</p><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 2=
+5px; color: #0B0C0C;">10:38am, 4 April 2019: EU Exit update: New informatio=
+n on residency and travel after EU Exit</p><hr style=3D"border: 0; height: =
+1px; background: #BFC1C3; Margin: 30px 0 30px 0;"><p style=3D"Margin: 0 0 2=
+0px 0; font-size: 19px; line-height: 25px; color: #0B0C0C;"><a style=3D"wor=
+d-wrap: break-word; color: #005ea5;" href=3D"https://www.gov.uk/guidance/so=
+cial-security-contributions-for-uk-and-eu-workers-if-the-uk-leaves-the-eu-w=
+ith-no-deal?utm_source=3D3eadb6b2-5320-4e21-a91f-c6fe91b7bf1b&amp;utm_mediu=
+m=3Demail&amp;utm_campaign=3Dgovuk-notifications&amp;utm_content=3Ddaily">S=
+ocial security contributions for UK and EU workers if the UK leaves the EU =
+with no deal</a></p><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-h=
+eight: 25px; color: #0B0C0C;">Find out when you need to pay social security=
+ contributions in the UK and other EU countries if the UK leaves the EU wit=
+hout a deal.</p><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-heigh=
+t: 25px; color: #0B0C0C;">10:31am, 4 April 2019: First published.</p><hr st=
+yle=3D"border: 0; height: 1px; background: #BFC1C3; Margin: 30px 0 30px 0;"=
+><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color:=
+ #0B0C0C;"><a style=3D"word-wrap: break-word; color: #005ea5;" href=3D"http=
+s://www.gov.uk/government/publications/policy-paper-on-the-rights-of-uk-nat=
+ionals-in-the-eu?utm_source=3D7b13bde4-0312-4beb-bca4-309b746741fe&amp;utm_=
+medium=3Demail&amp;utm_campaign=3Dgovuk-notifications&amp;utm_content=3Ddai=
+ly">Policy paper on the rights of UK nationals in the EU</a></p><p style=3D=
+"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C0C;">P=
+olicy paper outlining the UK Government=E2=80=99s action to protect the rig=
+hts of UK nationals living in the EU.</p><p style=3D"Margin: 0 0 20px 0; fo=
+nt-size: 19px; line-height: 25px; color: #0B0C0C;"> 9:36am, 4 April 2019: F=
+irst published.</p><hr style=3D"border: 0; height: 1px; background: #BFC1C3=
+; Margin: 30px 0 30px 0;"><p style=3D"Margin: 0 0 20px 0; font-size: 19px; =
+line-height: 25px; color: #0B0C0C;"><a style=3D"word-wrap: break-word; colo=
+r: #005ea5;" href=3D"https://www.gov.uk/email/unsubscribe/f3f57053-7fc1-4e3=
+4-873d-a7a52ddea6ff?title=3DBrexit">Unsubscribe from =E2=80=98Brexit=E2=80=
+=99</a></p><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25=
+px; color: #0B0C0C;">You=E2=80=99re getting this email because you subscrib=
+ed to these topic updates on GOV.=E2=80=8BUK.<br/><a style=3D"word-wrap: br=
+eak-word; color: #005ea5;" href=3D"https://www.gov.uk/email/authenticate?ad=
+dress=3Dmpbush%40gmail.com">View and manage your subscriptions</a></p><p st=
+yle=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C=
+0C;">&nbsp;</p><blockquote style=3D"Margin: 0 0 20px 0; border-left: 10px s=
+olid #BFC1C3;padding: 15px 0 0.1px 15px; font-size: 19px; line-height: 25px=
+;"><p style=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; colo=
+r: #0B0C0C;">Is this email useful? <a style=3D"word-wrap: break-word; color=
+: #005ea5;" href=3D"https://www.smartsurvey.co.uk/s/govuk-email/?f=3Ddigest=
+s">Answer some questions to tell us more</a>.</p></blockquote><p style=3D"M=
+argin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C0C;">&nb=
+sp;</p><blockquote style=3D"Margin: 0 0 20px 0; border-left: 10px solid #BF=
+C1C3;padding: 15px 0 0.1px 15px; font-size: 19px; line-height: 25px;"><p st=
+yle=3D"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C=
+0C;">Do not reply to this email. Feedback? Visit <a style=3D"word-wrap: bre=
+ak-word; color: #005ea5;" href=3D"https://www.gov.uk/contact">https://www.g=
+ov.uk/contact</a></p></blockquote>
+        <!--[if (gte mso 9)|(IE)]>
+              </td>
+            </tr>
+          </table>
+        <![endif]-->
+      </td>
+      <td width=3D"10" valign=3D"middle"><br /></td>
+    </tr>
+    <tr>
+      <td height=3D"30"><br /></td>
+    </tr>
+  </table>
+
+</body>
+</html>
+
+------=_Part_4361946_1207885658.1554449945337--
