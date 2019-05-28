@@ -6,7 +6,7 @@ import { stripDoc } from "./GovUKDocStripper";
 export let myfetch = fetch
 
 export default async function toDocUpdate(change: GovUkChange): Promise<DocUpdate> {
-    let response = await myfetch(change.url.toString())
+    const response = await myfetch(change.url.toString())
     if (!response.ok) {
         throw "Failed to get doc"
     }

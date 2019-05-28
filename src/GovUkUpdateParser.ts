@@ -65,11 +65,11 @@ function extractSingle(titleElem: DomElement) {
 export default function read(emailStream: Stream): Promise<GovUkChange[]> {
     const parser = new MailParser()
     return new Promise((resolve, reject) => {
-        parser.on('headers', (headers: Map<string, HeaderValue>) => {
+        parser.on("headers", (headers: Map<string, HeaderValue>) => {
             console.log(new Date().toISOString(), "Received mail:", headers)
         })
-        parser.on('data', data => {
-            if (data.type === 'text' && typeof data.html === "string") {
+        parser.on("data", data => {
+            if (data.type === "text" && typeof data.html === "string") {
                 resolve(parseBulk(data.html))
             } else {
                 reject("no html in message")
