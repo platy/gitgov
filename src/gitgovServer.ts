@@ -27,7 +27,7 @@ export function gitgovServer(repoPath: string) {
             }
             promised().then(() => callback(), err => {
                 console.error(new Date().toISOString(), err)
-                callback()
+                callback(err)
             });
         },
         onClose(session: SMTPServerSession) {
