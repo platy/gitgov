@@ -14,7 +14,7 @@ export default class DocUpdatePusher {
     }
 
     async push(change: DocUpdate) {
-        console.assert(await this.isClean(), "Repo must be clean before pushing a change")
+        console.assert(await this.isClean(), new Date().toISOString(), "Repo must be clean before pushing a change")
 
         const filepath = this.repoPath + change.path;
         const repopath = relative(this.repoPath, filepath)

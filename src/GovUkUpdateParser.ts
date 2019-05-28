@@ -52,7 +52,7 @@ function extractSingle(titleElem: DomElement) {
     const changeDescElem = descElem.next
     const url = new URL(unescape(titleElem.children[0].attribs.href))
     url.search = ""
-    console.assert(changeDescElem.next.name === "hr", "Expecting a HR after each change section")
+    console.assert(changeDescElem.next.name === "hr", new Date().toISOString(), "Expecting a HR after each change section")
     return {
         change: {
             url: url,
@@ -66,7 +66,7 @@ export default function read(emailStream: Stream): Promise<GovUkChange[]> {
     const parser = new MailParser()
     return new Promise((resolve, reject) => {
         parser.on('headers', (headers: Map<string, HeaderValue>) => {
-            console.log("Received mail:", headers)
+            console.log(new Date().toISOString(), "Received mail:", headers)
         })
         parser.on('data', data => {
             if (data.type === 'text' && typeof data.html === "string") {

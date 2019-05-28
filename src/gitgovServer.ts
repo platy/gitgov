@@ -16,7 +16,7 @@ export function gitgovServer(repoPath: string) {
             callback();
         },
         onData(stream: SMTPServerDataStream, _session: SMTPServerSession, callback: (err?: Error) => void) {
-            console.log("DATA")
+            console.log(new Date().toISOString(), "DATA")
             async function promised() {
                 const changes = await govUkParser(stream);
                 const updates = changes.map(toDocUpdate);
@@ -26,12 +26,12 @@ export function gitgovServer(repoPath: string) {
                 }
             }
             promised().then(() => callback(), err => {
-                console.error(err)
+                console.error(new Date().toISOString(), err)
                 callback()
             });
         },
         onClose(session: SMTPServerSession) {
-            console.log("Closed session", session);
+            console.log(new Date().toISOString(), "Closed session", session);
         }
     });
     return server;
