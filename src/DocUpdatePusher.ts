@@ -1,6 +1,6 @@
 import { DocUpdate } from "../src/DocUpdate"
 import { dirname, relative } from "path"
-import { createWriteStream, mkdir } from "fs"
+import { createWriteStream, mkdir, stat, exists } from "fs"
 import { promisify } from "util"
 import git from "simple-git/promise"
 
@@ -16,7 +16,7 @@ export default class DocUpdatePusher {
     async push(change: DocUpdate) {
         console.assert(await this.isClean(), new Date().toISOString(), "Repo must be clean before pushing a change")
 
-        const filepath = this.repoPath + change.path;
+        const filepath = await this.checkPath(this.repoPath + change.path);
         const repopath = relative(this.repoPath, filepath)
         await this.writeFile(filepath, change.content);
         await this.repo.add(repopath)
@@ -34,6 +34,17 @@ export default class DocUpdatePusher {
     private async hasRemote() {
         const remotes = await this.repo.getRemotes(false)
         return remotes.length > 0
+    }
+
+    private async checkPath(filepath: string): Promise<string> {
+        const fileExists = await promisify(exists)(filepath).catch(e => true)
+        if (fileExists) {
+            const stats = await promisify(stat)(filepath)
+            if (stats.isDirectory()) {        // Handles the case when the file being written is the index of a parent of an existing file, it doesn't solve the opposite problem
+                filepath = filepath + "-"
+            }
+        }
+        return filepath
     }
 
     private async writeFile(filepath: string, content: string) {
