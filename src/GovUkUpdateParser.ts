@@ -14,13 +14,18 @@ function parseBulk(emailHtml: string): Promise<GovUkChange[]> {
             if (error) {
                 reject(error)
             } else {
-                let changes = extractBulk(dom)
-                if (changes.length === 0) {
-                    // maybe its a single
-                    const {change} = extractSingle(DomUtils.findOne((elem: DomElement) => elem.name === "p", dom))
-                    changes = [change]
+                try {
+                    let changes = extractBulk(dom)
+                    if (changes.length === 0) {
+                        // maybe its a single
+                        const {change} = extractSingle(DomUtils.findOne((elem: DomElement) => elem.name === "p", dom))
+                        changes = [change]
+                    }
+                    resolve(changes)
+                } catch (err) {
+                    console.error(err, emailHtml)
+                    reject(err)
                 }
-                resolve(changes)
             }
         })
         const parser = new HTMLParser(handler)
