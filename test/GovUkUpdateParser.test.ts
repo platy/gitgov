@@ -1,5 +1,5 @@
-import { createReadStream } from "fs";
-import read from "../src/GovUkUpdateParser"
+import { createReadStream, promises as fs } from "fs";
+import read, { parseBulk, GovUkChange } from "../src/GovUkUpdateParser"
 import { Stream } from "stream";
 import { URL } from "url"
 
@@ -86,6 +86,19 @@ describe("gov.uk update email parser", () => {
                     url: new URL("https://www.gov.uk/government/publications/policy-paper-on-the-rights-of-uk-nationals-in-the-eu"),
                 },
             ])
+        })
+    })
+
+    describe("when given the new format body", () => {
+        let result: GovUkChange[]
+
+        beforeAll(async () => {
+            const bodyHtml = await fs.readFile("test/data/new-email-format.html", {encoding: "utf8"})
+            result = await parseBulk(bodyHtml)
+        })
+
+        it("has a result", () => {
+            expect(result).toHaveLength(1)
         })
     })
 })

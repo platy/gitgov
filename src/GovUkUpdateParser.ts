@@ -8,7 +8,7 @@ export interface GovUkChange {
     summary: string
 }
 
-function parseBulk(emailHtml: string): Promise<GovUkChange[]> {
+export function parseBulk(emailHtml: string): Promise<GovUkChange[]> {
     return new Promise((resolve, reject) => {
         const handler = new DomHandler((error, dom) => {
             if (error) {
@@ -53,6 +53,9 @@ function extractBulk(dom: DomElement[]) {
 }
 
 function extractSingle(titleElem: DomElement) {
+    if (titleElem.next.next.name === "hr") {
+        titleElem = titleElem.next.next.next.next // maybe all of them are like this but this is keeping it backwards compatible
+    }
     const descElem = titleElem.next
     const changeDescElem = descElem.next
     const url = new URL(unescape(titleElem.children[0].attribs.href))
