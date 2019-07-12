@@ -52,21 +52,33 @@ function extractBulk(dom: DomElement[]) {
     return changes
 }
 
+/** Get the next sibling tag, potentially with the specified name */
+function nextElem(elem: DomElement, name?: string) {
+    do {
+        elem = elem.next
+    } while (elem.type !== "tag" || (name && name !== elem.name))
+    return elem
+}
+
 function extractSingle(titleElem: DomElement) {
-    if (titleElem.next.next.name === "hr") {
-        titleElem = titleElem.next.next.next.next // maybe all of them are like this but this is keeping it backwards compatible
+    if (nextElem(titleElem).name === "hr") {
+        titleElem = nextElem(titleElem, "p") // maybe all of them are like this but this is keeping it backwards compatible
     }
-    const descElem = titleElem.next
-    const changeDescElem = descElem.next
     const url = new URL(unescape(titleElem.children[0].attribs.href))
     url.search = ""
-    console.assert(changeDescElem.next.name === "hr", new Date().toISOString(), "Expecting a HR after each change section")
+    const descElem = nextElem(titleElem, "p")
+    console.assert((descElem.children[0].data as string).replace(/\W+/, " ") === "Page summary", (descElem.children[0].data as string).replace(/\w+/, " ") + "not Page summary")
+    const changeDescElem = nextElem(descElem, "p")
+    console.assert((changeDescElem.children[0].data as string).replace(/\W+/, " ") === "Change made", (changeDescElem.children[0].data as string).replace(/\w+/, " ") + " not Change made")
+    const updateTimeElem = nextElem(changeDescElem, "p")
+    console.assert((updateTimeElem.children[0].data as string).replace(/\W+/, " ") === "Time updated", (updateTimeElem.children[0].data as string).replace(/\w+/, " ") + " not Time updated")
+    console.assert(updateTimeElem.next.name === "hr", new Date().toISOString(), "Expecting a HR after each change section")
     return {
         change: {
             url: url,
-            summary: changeDescElem.children[0].data.trim(),
+            summary: updateTimeElem.children[2].data.trim() + ": " + changeDescElem.children[2].data.trim(),
         },
-        nextTitle: changeDescElem.next.next
+        nextTitle: nextElem(updateTimeElem, "p")
     }
 }
 
