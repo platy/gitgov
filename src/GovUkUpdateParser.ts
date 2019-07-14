@@ -1,4 +1,4 @@
-import { MailParser, HeaderValue } from "mailparser";
+import { MailParser, HeaderValue, AddressObject } from "mailparser";
 import { URL } from "url";
 import { DomHandler, Parser as HTMLParser, DomUtils, DomElement } from "htmlparser2"
 import { Stream } from "stream";
@@ -23,7 +23,7 @@ export function parseBulk(emailHtml: string): Promise<GovUkChange[]> {
                     }
                     resolve(changes)
                 } catch (err) {
-                    console.error(err, emailHtml)
+                    console.error(new Date().toISOString(), "Failed parsing message from email body", emailHtml)
                     reject(err)
                 }
             }
@@ -85,12 +85,19 @@ function extractSingle(titleElem: DomElement) {
 export default function read(emailStream: Stream): Promise<GovUkChange[]> {
     const parser = new MailParser()
     return new Promise((resolve, reject) => {
+        let junk = false
         parser.on("headers", (headers: Map<string, HeaderValue>) => {
             console.log(new Date().toISOString(), "Received mail:", headers)
+            if (!(headers.get("from") as AddressObject).text.includes("gov.uk")) {
+                junk = true
+            }
         })
         parser.on("data", data => {
-            if (data.type === "text" && typeof data.html === "string") {
-                resolve(parseBulk(data.html))
+            if (junk) {
+                console.log(new Date().toISOString(), "Discarded as junk", data)
+                resolve([])
+            } else if (data.type === "text" && typeof data.html === "string") {
+                    resolve(parseBulk(data.html))
             } else {
                 reject("no html in message")
             }

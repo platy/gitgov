@@ -13,7 +13,7 @@ export default class DocUpdatePusher {
         this.repo = git(repoPath)
     }
 
-    async push(change: DocUpdate) {
+    async push(change: DocUpdate): Promise<void> {
         console.assert(await this.isClean(), new Date().toISOString(), "Repo must be clean before pushing a change")
 
         const filepath = await this.checkPath(this.repoPath + change.path);
@@ -26,12 +26,12 @@ export default class DocUpdatePusher {
         }
     }
 
-    private async isClean() {
+    private async isClean(): Promise<boolean> {
         const status = await this.repo.status()
         return status.isClean()
     }
 
-    private async hasRemote() {
+    private async hasRemote(): Promise<boolean> {
         const remotes = await this.repo.getRemotes(false)
         return remotes.length > 0
     }
@@ -47,7 +47,7 @@ export default class DocUpdatePusher {
         return filepath
     }
 
-    private async writeFile(filepath: string, content: string) {
+    private async writeFile(filepath: string, content: string): Promise<void> {
         await promisify(mkdir)(dirname(filepath), { recursive: true });
         const writeStream = createWriteStream(filepath);
         await new Promise((resolve, reject) => {

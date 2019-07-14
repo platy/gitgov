@@ -15,7 +15,7 @@ describe("document update pusher", () => {
             basePath = resolve("temp/testrepo")
             await fs.promises.mkdir(basePath, { recursive: true })
             repo = git(basePath)
-            await repo.init()
+            await repo.init(false)
 
             const pusher = new DocUpdatePusher(basePath)
             change = {
