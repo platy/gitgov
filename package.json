@@ -1,6 +1,6 @@
 {
   "name": "gitgov",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Tries to maintain a mirror of goverment publications",
   "main": "index.js",
   "scripts": {

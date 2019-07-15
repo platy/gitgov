@@ -1,0 +1,107 @@
+
+# Volume for gitgov repository for the gitgov backend, the volume is mounted on a particular host and therefore the app has affinity to that host
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: gitgovuk-repo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  local:
+    path: /volumes/gitgovuk
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - k1
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  volumeMode: Filesystem
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gitgov-repo-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: local-storage
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitgov
+spec:
+  selector:
+    matchLabels:
+      app: gitgov
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: gitgov
+    spec:
+      containers:
+      - name: gitgov-smtp-receiver
+        image: rg.nl-ams.scw.cloud/njkonl/gitgov:0.0.6
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "80Mi"
+            cpu: "50m"
+        ports:
+        - containerPort: 25
+          hostPort: 25
+        volumeMounts:
+          - mountPath: "/repo"
+            name: repo
+          - mountPath: /root/.ssh
+            name: ssh-key
+            readOnly: true
+      initContainers:
+      - name: prepare-repo
+        image: rg.nl-ams.scw.cloud/njkonl/clone-repo:0.2
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "80Mi"
+            cpu: "10m"
+        volumeMounts:
+          - mountPath: "/repo"
+            name: repo
+          - mountPath: /root/.ssh
+            name: ssh-key
+            readOnly: true
+            
+        args:
+          - /repo
+          - git@github.com:platy/gitgovuk.git
+      imagePullSecrets:
+      - name: regcred
+      volumes:
+        - name: repo
+          persistentVolumeClaim:
+            claimName: gitgov-repo-claim
+        - name: ssh-key
+          secret:
+            secretName: gitgov-repo-sshcreds
+            defaultMode: 0600
+          

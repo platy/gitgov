@@ -1,0 +1,9 @@
+node_modules
+Dockerfile
+deployment.yaml
+README
+coverage
+dist
+scrape
+repo
+repo-stripped
