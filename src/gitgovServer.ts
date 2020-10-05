@@ -18,11 +18,11 @@ export function gitgovServer(repoPath: string) {
         onData(stream: SMTPServerDataStream, _session: SMTPServerSession, callback: (err?: Error) => void) {
             console.log(new Date().toISOString(), "DATA")
             async function promised() {
-                const changes = await govUkParser(stream);
+                const [changes, topic] = await govUkParser(stream);
                 const updates = changes.map(toDocUpdate);
                 // await and push each update sequentially
                 for (const update of updates) {
-                    await pusher.push(await update);
+                    await pusher.push(await update, topic);
                 }
             }
             promised().then(() => callback(), err => {

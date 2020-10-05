@@ -82,22 +82,35 @@ function extractSingle(titleElem: DomElement) {
     }
 }
 
-export default function read(emailStream: Stream): Promise<GovUkChange[]> {
+export default function read(emailStream: Stream): Promise<[GovUkChange[], string]> {
     const parser = new MailParser()
     return new Promise((resolve, reject) => {
         let junk = false
+        let topic = "Unknown"
         parser.on("headers", (headers: Map<string, HeaderValue>) => {
             console.log(new Date().toISOString(), "Received mail:", headers)
-            if (!(headers.get("from") as AddressObject).text.includes("gov.uk")) {
+            const from = (headers.get("from") as AddressObject).text;
+            if (!from.includes("gov.uk")) {
                 junk = true
+            } else {
+                topic = from.split("@")[0]
             }
         })
+        if (topic === "govuk") {
+            topic = "Brexit"
+        }
+        if (topic === "covid") {
+            topic = "Covid-19"
+        }
+        if (topic === "news") {
+            topic = "News"
+        }
         parser.on("data", data => {
             if (junk) {
                 console.log(new Date().toISOString(), "Discarded as junk", data)
-                resolve([])
+                resolve([[], "junk"])
             } else if (data.type === "text" && typeof data.html === "string") {
-                    resolve(parseBulk(data.html))
+                parseBulk(data.html).then(parsed => resolve([parsed, topic]))
             } else {
                 reject("no html in message")
             }

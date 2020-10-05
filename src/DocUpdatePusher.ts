@@ -13,14 +13,14 @@ export default class DocUpdatePusher {
         this.repo = git(repoPath)
     }
 
-    async push(change: DocUpdate): Promise<void> {
+    async push(change: DocUpdate, topic: string): Promise<void> {
         console.assert(await this.isClean(), new Date().toISOString(), "Repo must be clean before pushing a change")
 
         const filepath = await this.checkPath(this.repoPath + change.path);
         const repopath = relative(this.repoPath, filepath)
         await this.writeFile(filepath, change.content);
         await this.repo.add(repopath)
-        await this.repo.commit(change.changeMessage, repopath)
+        await this.repo.commit(change.changeMessage + ` [${topic}]`, repopath)
         if (await this.hasRemote()) {
             await this.repo.push()
         }

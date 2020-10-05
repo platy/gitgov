@@ -23,7 +23,7 @@ describe("document update pusher", () => {
                 changeMessage: "COMMIT",
                 content: "CONTENT"
             }
-            return pusher.push(change)
+            return pusher.push(change, "topic")
         })
 
         it("writes the new file", () => {
@@ -32,7 +32,7 @@ describe("document update pusher", () => {
 
         it("adds a commit", async () => {
             const log = await repo.log()
-            expect(log.latest.message).toBe("COMMIT")
+            expect(log.latest.message).toBe("COMMIT [topic]")
         })
 
         it("doesn't leave workspace dirty", async () => {
@@ -106,7 +106,7 @@ describe("document update pusher", () => {
                 content: "CONTENT"
             }
             await fs.promises.mkdir(join(basePath, change.path), { recursive: true })
-            return pusher.push(change)
+            return pusher.push(change, "topic")
         })
 
         it("creates a new file with a dash", () => {
@@ -115,7 +115,7 @@ describe("document update pusher", () => {
 
         it("adds a commit", async () => {
             const log = await repo.log()
-            expect(log.latest.message).toBe("COMMIT")
+            expect(log.latest.message).toBe("COMMIT [topic]")
         })
 
         it("doesn't leave workspace dirty", async () => {
