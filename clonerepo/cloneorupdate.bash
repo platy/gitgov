@@ -15,5 +15,6 @@ elif [ "$(ls -A $REPODIR)" -a ! "$(git -C $REPODIR status -s)" -a "$(git -C $REP
     git -C $REPODIR pull
 else
     echo not clean
+    ls -A $REPODIR
     exit 1
 fi
