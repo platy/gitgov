@@ -89,27 +89,28 @@ export default function read(emailStream: Stream): Promise<[GovUkChange[], strin
         let topic = "Unknown"
         parser.on("headers", (headers: Map<string, HeaderValue>) => {
             console.log(new Date().toISOString(), "Received mail:", headers)
-            const from = (headers.get("from") as AddressObject).text;
+            const from = (headers.get("from") as AddressObject).value[0].address;
+            const to = (headers.get("to") as AddressObject).value[0].address;
             if (!from.includes("gov.uk")) {
                 junk = true
             } else {
-                topic = from.split("@")[0]
+                topic = to.split("@")[0]
             }
         })
-        if (topic === "govuk") {
-            topic = "Brexit"
-        }
-        if (topic === "covid") {
-            topic = "Covid-19"
-        }
-        if (topic === "news") {
-            topic = "News"
-        }
         parser.on("data", data => {
             if (junk) {
                 console.log(new Date().toISOString(), "Discarded as junk", data)
                 resolve([[], "junk"])
             } else if (data.type === "text" && typeof data.html === "string") {
+                if (topic === "govuk") {
+                    topic = "Brexit"
+                }
+                if (topic === "covid") {
+                    topic = "Covid-19"
+                }
+                if (topic === "news") {
+                    topic = "News"
+                }
                 parseBulk(data.html).then(parsed => resolve([parsed, topic]))
             } else {
                 reject("no html in message")

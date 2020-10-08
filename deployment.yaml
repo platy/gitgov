@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: gitgov-smtp-receiver
-        image: rg.nl-ams.scw.cloud/njkonl/gitgov:0.0.9
+        image: rg.nl-ams.scw.cloud/njkonl/gitgov:0.1.1
         resources:
           limits:
             memory: "128Mi"
